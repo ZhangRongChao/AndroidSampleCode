@@ -6,6 +6,8 @@
 
     更多用法可参考官方文档：
     https://docs.python.org/3/library/string.html#format-string-syntax
+    
+    《图解Python》
 """
 book = '《数据结构与算法》'
 
@@ -14,6 +16,8 @@ print(s)    # 买了一本书：《数据结构与算法》
 
 """
     如果占位符{}中不指定参数，方法format的参数会按顺序依次匹配所有的占位符{}。
+    
+    《图解Python》
 """
 price = 68.88
 
@@ -23,6 +27,8 @@ print(s)    # 花了68.88，买了一本书：《数据结构与算法》
 """
     占位符{}中可以指定位置参数，0表示方法format的第1个参数，1表示方法format的第2个参数，...，
 依次类推。
+
+    《图解Python》
 """
 s = '花了{0}，买了一本书：{1}, 只花了{0}！'.format(price, book)
 print(s)  # 花了68.88，买了一本书：《数据结构与算法》, 只花了68.88！
@@ -35,6 +41,8 @@ print('我的{1[computer]}运行的平台是：{0.platform}'.format(sys, {'compu
 
 """
     可以在方法format中指定关键字参数的名称和值，在占位符{}中指定关键字参数的名称。
+    
+    《图解Python》
 """
 s = '花了{p}，买了一本书：{b}, 只花了{p}！'.format(p=price, b=book)
 print(s)  # 花了68.88，买了一本书：《数据结构与算法》, 只花了68.88！
