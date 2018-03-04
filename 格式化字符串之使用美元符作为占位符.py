@@ -6,6 +6,8 @@
 
     更多用法可参考官方文档：
     https://docs.python.org/3/library/string.html#template-strings
+    
+    《图解Python》
 """
 from string import Template
 
