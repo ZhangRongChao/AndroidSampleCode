@@ -24,6 +24,8 @@
 二、格式化字符串之使用百分号作为占位符
     更多用法可参考官方文档：
     https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting
+    
+    《图解Python》
 """
 from datetime import datetime
 
@@ -38,6 +40,8 @@ print(datetime(2019, 9, 19, 19, 19, 19).strftime('%Y-%m-%d %H:%M:%S'))
 %s：表示字符串
 %i或%d：表示整数
 %f：表示浮点数
+
+    《图解Python》
 """
 book = '《数据结构与算法》'
 
@@ -46,6 +50,8 @@ print(s)    # 买了一本书：《数据结构与算法》
 
 """    
     当字符串中包含两个及两个以上的占位符时，必须将所有的替换值封装在元组中。
+    
+    《图解Python》
 """
 price = 68.88
 s = '花了%f，买了一本书：%s' % (price, book)
