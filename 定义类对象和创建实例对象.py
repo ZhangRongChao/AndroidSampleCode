@@ -18,11 +18,7 @@ class SomeClass(object):
 """
 二、创建实例对象
     根据类对象创建实例对象的语法格式为：类名([实参])。
-"""
-sc = SomeClass()
-print(sc)   # <__main__.SomeClass object at 0x103856dd8>
 
-"""
     为了在创建实例对象后对其进行初始化（例如：给实例对象绑定一些属性），可以在类对象中定义一个
 名为__init__的特殊方法（以双下划线__开头和结尾的方法）。这样，创建实例对象后就会自动调用
 特殊方法__init__。
@@ -33,8 +29,15 @@ print(sc)   # <__main__.SomeClass object at 0x103856dd8>
 2. 调用方法时，系统自动将调用该方法的实例对象作为实参传递给第一个形参。第一个实参会传递给
 第二个形参，第二个实参会传递给第三个形参，依次类推。
 
+    如果没有定义特殊方法__init__，或者定义了特殊方法__init__但是没有定义除self之外的形参，
+那么根据类对象创建实例对象时就不需要传入实参。
+
     《图解Python》
 """
+sc = SomeClass()
+print(sc)   # <__main__.SomeClass object at 0x103856dd8>
+
+
 class SomeClass1(object):
     def __init__(self):
         self.data = 18
