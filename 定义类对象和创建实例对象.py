@@ -1,56 +1,77 @@
 
-"""定义类对象和创建实例对象"""
+"""实例属性"""
 
 """
-一、定义类对象
-    定义类对象的语法格式：
-class 类名(object):
-    # 属性和方法
-    pass
-
-其中，
-1. 类名由一个或多个单词组合而成，每个单词的首字母大写且其余字母全部小写，例如：SomeClass。
-2. (object)表示该类继承自类object，Python中的所有类都继承自一个统一的基类：object。
+    实例属性指的是实例对象所绑定的属性。
+    
+    Python是动态语言，所以，在实例对象创建之后，可以对其动态地绑定属性。
+    
+    绑定实例属性（给实例对象动态绑定属性）的方式有两种：
+    1. 在类的内部（方法中）
+        self.属性名 = 属性值 
+        推荐在特殊方法__init__()中进行绑定，这样，在创建实例对象后就会自动调用特殊方法
+    __init__()对实例对象进行初始化，从而绑定实例属性。如果在其它方法中进行绑定，可能需要
+    手动调用方法后才会绑定。
+    2. 在类的外部
+        实例对象.属性名 = 属性值
+        如果指定名称的实例属性已经存在，则是对实例属性进行修改。
+    
+    访问实例属性的方式有两种：
+    1. 在类的内部（方法中）
+        self.属性名
+    2. 在类的外部
+        实例对象.属性名
+    
+    之所以添加前缀"self"或"实例对象"，是为了表明实例属性被哪个实例对象所绑定。
 """
-class SomeClass(object):
-    pass
+class MyClass(object):
+    def __init__(self):
+        # 在类的内部（方法中）绑定实例属性
+        self.ia1 = 18
+
+    def do_sth(self):
+        # 在类的内部（方法中）访问实例属性
+        print(self.ia1)
+
+    def do_another(self):
+        self.ia = 'hello'
+
+mc = MyClass()
+
+# 在类的外部绑定实例属性
+mc.ia2 = 3.14
+
+# 在类的外部修改绑定的实例属性值
+mc.ia1 = 19
+
+# 在类的外部访问实例属性
+print(mc.ia1)   # 19
+print(mc.ia2)   # 3.14
+
+# 在类的外部调用方法，使得在类的内部（方法中）访问实例属性
+mc.do_sth()     # 19
+
+# print(mc.ia)    # AttributeError: 'MyClass' object has no attribute 'ia'
+
+# 手动调用方法后才会绑定
+mc.do_another()
+print(mc.ia)    # hello
 
 """
-二、创建实例对象
-    根据类对象创建实例对象的语法格式为：类名([实参])。
-
-    为了在创建实例对象后对其进行初始化（例如：给实例对象绑定一些属性），可以在类对象中定义一个
-名为__init__的特殊方法（以双下划线__开头和结尾的方法）。这样，创建实例对象后就会自动调用
-特殊方法__init__。
-
-    方法就是定义在类对象中的函数。方法与函数的区别在于：
-1. 定义方法时，方法的第一个形参表示调用该方法的实例对象，第一个形参的名称通常是self，
-也可以是其它名称。
-2. 调用方法时，系统自动将调用该方法的实例对象作为实参传递给第一个形参。第一个实参会传递给
-第二个形参，第二个实参会传递给第三个形参，依次类推。
-
-    如果没有定义特殊方法__init__，或者定义了特殊方法__init__但是没有定义除self之外的形参，
-那么根据类对象创建实例对象时就不需要传入实参。
-
+    同一个类的不同实例所绑定的实例属性是相互独立的。也就是说，给一个实例对象绑定的实例属性，
+对于另外一个实例对象是不起作用的。 
     《图解Python》
 """
-sc = SomeClass()
-print(sc)   # <__main__.SomeClass object at 0x103856dd8>
+class Student(object):
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
 
+s1 = Student('张三', 98)
+s2 = Student('李四', 86)
 
-class SomeClass1(object):
-    def __init__(self):
-        self.data = 18
+s1.age = 18
 
-sc1 = SomeClass1()
-print(sc1.data)     # 18
-
-
-class SomeClass2(object):
-    def __init__(self, data1, data2):
-        self.data1 = data1
-        self.data2 = data2
-
-sc2 = SomeClass2(5, 8)
-print(sc2.data1)     # 5
-print(sc2.data2)     # 8
+# 访问特殊属性__dict__可以获得实例对象所绑定的所有属性和方法的字典
+print(s1.__dict__)  # {'name': '张三', 'score': 98, 'age': 18}
+print(s2.__dict__)  # {'name': '李四', 'score': 86}
