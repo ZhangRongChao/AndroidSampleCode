@@ -29,33 +29,51 @@ class MyClass(object):
         # 在类的内部（方法中）绑定实例属性
         self.ia1 = 18
 
-    def do_sth(self):
+    def do_sth1(self):
         # 在类的内部（方法中）访问实例属性
         print(self.ia1)
 
+    def do_sth2(self):
+        # 在类的内部（方法中）访问实例属性
+        print(self.ia2)
+
     def do_another(self):
-        self.ia = 'hello'
+        # 在类的内部（方法中）绑定实例属性
+        self.ia2 = 56
+
+    def do_sth3(self):
+        # 在类的内部（方法中）访问实例属性
+        print(self.ia3)
 
 mc = MyClass()
 
-# 在类的外部绑定实例属性
-mc.ia2 = 3.14
-
-# 在类的外部修改绑定的实例属性值
-mc.ia1 = 19
-
+# 在类的外部调用方法，使得在类的内部（方法中）访问实例属性
+mc.do_sth1()    # 18
 # 在类的外部访问实例属性
-print(mc.ia1)   # 19
-print(mc.ia2)   # 3.14
+print(mc.ia1)   # 18
 
 # 在类的外部调用方法，使得在类的内部（方法中）访问实例属性
-mc.do_sth()     # 19
-
-# print(mc.ia)    # AttributeError: 'MyClass' object has no attribute 'ia'
+# mc.do_sth2()    # AttributeError: 'MyClass' object has no attribute 'ia2'
+# 在类的外部访问实例属性
+# print(mc.ia2)   # AttributeError: 'MyClass' object has no attribute 'ia2'
 
 # 手动调用方法后才会绑定
 mc.do_another()
-print(mc.ia)    # hello
+# 在类的外部调用方法，使得在类的内部（方法中）访问实例属性
+mc.do_sth2()    # 56
+# 在类的外部访问实例属性
+print(mc.ia2)   # 56
+
+# 在类的外部绑定实例属性
+mc.ia3 = 3.14
+# 在类的外部访问实例属性
+print(mc.ia3)   # 3.14
+# 在类的外部修改绑定的实例属性值
+mc.ia3 = 19
+# 在类的外部访问实例属性
+print(mc.ia3)   # 19
+# 在类的外部调用方法，使得在类的内部（方法中）访问实例属性
+mc.do_sth3()    # 19
 
 """
     同一个类的不同实例所绑定的实例属性是相互独立的。也就是说，给一个实例对象绑定的实例属性，
