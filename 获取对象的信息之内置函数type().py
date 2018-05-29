@@ -1,60 +1,44 @@
 
-"""获取对象的信息之内置函数type()"""
+"""获取对象的信息之内置函数dir()"""
 
 """
-    内置函数type()用于获得指定对象的类型。
-"""
-
-"""
-    实例对象的类型是其对应的类对象。
+    对于指定的类对象或实例对象，可以调用内置函数dir()获得其所有可以访问的属性和方法（包括
+从父类中继承的属性和方法）的列表。
+    类对象与其实例对象的结果是有区别的，类对象的结果中不包括实例属性。
 """
 class MyClass(object):
-    pass
+    ca = 'ca'
 
-mc = MyClass()
+    def __init__(self):
+        self.ia = 'ia'
 
-# mc的类型是MyClass，mc是MyClass的一个实例对象
-print(type(mc))  # <class '__main__.MyClass'>
+    def im(self):
+        pass
 
-# 整数对象18的类型是int，整数对象18是int的一个实例对象
-print(type(18))     # <class 'int'>
+    @classmethod
+    def cm(cls):
+        pass
 
-# 字符串对象'abc'的类型是str，字符串对象'abc'是str的一个实例对象
-print(type('abc'))     # <class 'str'>
+    @staticmethod
+    def sm():
+        pass
 
+print(dir(MyClass))
 """
-    类对象的类型是type，也就是说，类对象是type的一个实例。
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', 
+'__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', 
+'__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', 
+'__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', 
+'__str__', '__subclasshook__', '__weakref__', 
+'ca', 'im', 'cm', 'sm']
 """
-# 类对象MyClass的类型是type，类对象MyClass是type的一个实例
-print(type(MyClass))    # <class 'type'>
 
-# 类对象int的类型是type，类对象int是type的一个实例
-print(type(int))    # <class 'type'>
-
-# 类对象str的类型是type，类对象str是type的一个实例
-print(type(str))    # <class 'type'>
-
+print(dir(MyClass()))
 """
-    自定义函数对象的类型是function。
-    内置函数对象的类型是builtin_function_or_method。
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', 
+'__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', 
+'__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', 
+'__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', 
+'__str__', '__subclasshook__', '__weakref__', 
+'ca', 'im', 'cm', 'sm', 'ia']
 """
-def do_sth():
-    pass
-
-print(type(do_sth))     # <class 'function'>
-
-print(type(print))      # <class 'builtin_function_or_method'>
-
-"""
-    可以使用运算符==判断某个对象的类型是否是指定的类型。
-    对于基本数据类型，可以直接使用其对应的类名；如果不是基本数据类型，需要使用模块types中定义的变量。
-"""
-print(type(18) == int)      # True
-print(type('abc') == str)   # True
-
-# print(type(do_sth) == function)
-# print(type(print) == builtin_function_or_method)
-
-import types
-print(type(do_sth) == types.FunctionType)           # True
-print(type(print) == types.BuiltinFunctionType)     # True
