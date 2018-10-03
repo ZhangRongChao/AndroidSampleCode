@@ -1,46 +1,43 @@
 
-"""什么是ThreadLocal"""
+"""定时器线程Timer"""
+
+from threading import Timer
+from time import sleep
 
 """
-    ThreadLocal是一个全局变量，用来存放各个线程的局部变量。ThreadLocal中会维护
-"某个线程 - 该线程内的某个局部变量名 - 该局部变量的值"的映射。
-    在线程中将局部变量写入ThreadLocal的语法格式为：threadlocal.局部变量名 = 局部变量值；
-在线程中从ThreadLocal中读取局部变量的语法格式为：threadlocal.局部变量名。
+    如果想要在指定的时间片段之后再创建与启动子线程，可以使用标准库模块threading提供的
+类对象Timer，用于表示定时器线程。
 
-    ThreadLocal常见的应用场景是：为每个线程都绑定一个HTTP请求或数据库连接，绑定的相关信息作为
-局部变量，这样线程内的所有相关函数都可以方便地访问这些局部变量。
+    Timer是Thread的子类，除了继承了方法start()用于启动线程之外，还添加了以下方法：
+（1）__init__(self, interval, function, args=None, kwargs=None)
+    参数interval用于指定在多少秒之后启动线程。由于多线程执行的不确定性，未必恰好在指定的时间之后
+启动线程。
+    参数function用于指定被方法run()调用的函数或lambda表达式。
+    参数args用于指定function接收的位置参数，用元组表示，默认不接收位置参数。
+    参数kwargs用于指定function接收的关键字参数，用字典表示，默认不接收关键字参数。
+（2）cancel(self)
+    在参数interval指定的时间内取消定时器，不再启动线程。
+
+    
+def do_sth():
+    print('Hello Timer!')
+
+timer = Timer(2, do_sth)
+timer.start()
 """
-import threading
 
-thread_local = threading.local()
+"""
+    定时器只执行一次。如果需要每隔一段时间执行一次，则需要在参数function指定的函数或lambda表达式
+的内部再次创建与启动定时器线程。
+"""
+def do_sth():
+    print('Hello Timer!')
+    global timer
+    timer = Timer(3, do_sth)
+    timer.start()
 
-def do_sth(arg1, arg2, arg3):
-    thread_local.local_var1 = arg1
-    thread_local.local_var2 = arg2
-    thread_local.local_var3 = arg3
+timer = Timer(2, do_sth)
+timer.start()
 
-    fun1()
-    fun2()
-    fun3()
-
-def fun1():
-    print('%s：%s -- %s -- %s' % (threading.current_thread().name,
-                        thread_local.local_var1,
-                        thread_local.local_var2,
-                        thread_local.local_var3))
-def fun2():
-    print('%s：%s -- %s -- %s' % (threading.current_thread().name,
-                        thread_local.local_var1,
-                        thread_local.local_var2,
-                        thread_local.local_var3))
-def fun3():
-    print('%s：%s -- %s -- %s' % (threading.current_thread().name,
-                        thread_local.local_var1,
-                        thread_local.local_var2,
-                        thread_local.local_var3))
-
-t1 = threading.Thread(target=do_sth, args=('a', 'b', 'c'))
-t2 = threading.Thread(target=do_sth, args=('d', 'e', 'f'))
-
-t1.start()
-t2.start()
+sleep(10)
+timer.cancel()
